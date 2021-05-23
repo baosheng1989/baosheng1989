@@ -1,0 +1,79 @@
+print("""
+欢迎使用光荣之路图书馆系统，支持的命令如下：
+borrow:借书
+back:还书
+put_in:加入新书
+list_all:查看所有的书
+list_borrow:查看谁借了书
+list_remain:可借阅的书
+"""
+)
+
+import sys
+import traceback
+
+
+library = []
+borrowed_books = []
+remain_books = []
+books_dict ={}
+
+def put_in():
+    book_name = input("请输入入库的书名：")
+    if book_name.strip():
+        library.append(book_name.strip())
+        remain_books.append(book_name.strip())
+    print("《%s》图书已经入库成功！" %book_name)
+
+def list_all():
+    print(library)
+
+
+def list_remain():
+    print(remain_books)
+
+def borrow():
+    book_name = input("请输入您需要借阅的书名：")
+    people_name = input("请输入您的名字:")
+    books_dict[book_name.strip()] = people_name.strip()
+    if book_name.strip() in remain_books:
+        print("%s 借阅给你了！记得一周内归还" %book_name)
+        remain_books.remove(book_name.strip())
+    else:
+        print('没有查询到相关信息，请重新输入')
+        
+    
+        
+    
+def list_borrow():
+    book_name = input("请输入你要查询的书籍:")
+    if book_name.strip() in books_dict:
+        print(books_dict[book_name])
+    else:
+        print('没有查询要相关信息，请重新输入')
+        
+def back_book():
+    book_name = input('请输入你要归还的书名：')
+    if book_name.strip() in library:
+        library.remove(book_name.strip())
+
+while 1:
+    try:
+        command = input("请输入你的命令：")
+        if command.strip() =="exit":
+            print("图书馆系统退出了，我们下次再见！")
+            break
+        eval(command+"()")
+    except:
+        #traceback.print_exc()
+        print("您输入的命令有误，请重新输入！支持的命令如下：")
+        print("""
+欢迎使用光荣之路图书馆系统，支持的命令如下：
+borrow:借书
+back:还书
+put_in:加入新书
+list_all:查看所有的书
+list_borrow:查看谁借了书
+list_remain:可借阅的书
+"""
+	)
